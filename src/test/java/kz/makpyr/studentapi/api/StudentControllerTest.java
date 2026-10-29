@@ -91,4 +91,14 @@ class StudentControllerTest {
 			.andExpect(status().isBadRequest());
 	}
 
+	@Test
+	void duplicateEmailIs409() throws Exception {
+		create("Marua", "same@makpyr.kz");
+		mvc.perform(post(BASE).contentType(MediaType.APPLICATION_JSON).content(json("Other", "SAME@makpyr.kz")))
+			.andExpect(status().isConflict());
+		long other = create("Aru", "other@makpyr.kz");
+		mvc.perform(put(BASE + "/" + other).contentType(MediaType.APPLICATION_JSON).content(json("Aru", "same@makpyr.kz")))
+			.andExpect(status().isConflict());
+	}
+
 }
