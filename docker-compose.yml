@@ -17,7 +17,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-    restart: unless-stopped
 
   api:
     build: .
@@ -34,7 +33,6 @@ services:
         condition: service_healthy
     networks:
       - makpyr-marua-network
-    restart: unless-stopped
 
 volumes:
   makpyr-marua-db-data:
