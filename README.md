@@ -51,3 +51,8 @@ Errors are returned as ProblemDetail JSON (`application/problem+json`):
 - 400 - empty or invalid fields in POST / PUT
 - 404 - `No student with id N`
 - 409 - email is already used by another student
+
+## CI/CD
+
+Jenkins Multibranch Pipeline `Makpyr_Marua_Student_API` polls GitHub every 3 minutes
+(`pollSCM('H/3 * * * *')`) and runs Checkout, Build, Test, Docker Build and Verify.
