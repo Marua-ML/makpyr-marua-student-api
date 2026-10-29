@@ -2,7 +2,7 @@
 
 Student: Marua Makpyr, IT2-2306, ID 37578
 
-Status: CRUD with duplicate email check merged into main
+Status: CRUD with duplicate email check merged, API documentation with error responses added
 
 ## About
 
@@ -43,3 +43,11 @@ Author: Marua Makpyr (IT2-2306, ID 37578), branch `feature/makpyr-marua-crud`.
 
 POST and PUT now return **409 Conflict** (ProblemDetail) when the email is already used
 by another student. The check ignores letter case. Test: `duplicateEmailIs409`.
+
+## Error responses
+
+Errors are returned as ProblemDetail JSON (`application/problem+json`):
+
+- 400 - empty or invalid fields in POST / PUT
+- 404 - `No student with id N`
+- 409 - email is already used by another student
