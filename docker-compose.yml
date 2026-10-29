@@ -1,0 +1,45 @@
+name: makpyr-marua-student-api
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: makpyr-marua-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - makpyr-marua-db-data:/var/lib/postgresql/data
+    networks:
+      - makpyr-marua-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    build: .
+    image: makpyr-marua-student-api:${API_TAG}
+    container_name: makpyr-marua-api
+    ports:
+      - "8081:8081"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - makpyr-marua-network
+    restart: unless-stopped
+
+volumes:
+  makpyr-marua-db-data:
+    name: makpyr-marua-db-data
+
+networks:
+  makpyr-marua-network:
+    name: makpyr-marua-network

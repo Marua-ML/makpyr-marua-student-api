@@ -1,0 +1,23 @@
+# Gradle and build output
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+bin/
+out/
+
+# macOS
+.DS_Store
+
+# Secrets: never commit real passwords
+.env
+
+# Runtime files of the monitoring script
+logs/*.log
+logs/*.txt
+backups/*
+!backups/.gitkeep
