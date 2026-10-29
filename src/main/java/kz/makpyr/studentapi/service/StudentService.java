@@ -29,12 +29,18 @@ public class StudentService {
 	}
 
 	public Student add(StudentRequest request) {
+		if (students.existsByEmailIgnoreCase(request.email())) {
+			throw new DuplicateEmailException(request.email());
+		}
 		Student student = new Student(request.name(), request.surname(), request.email(), request.studyGroup());
 		return students.save(student);
 	}
 
 	public Student change(Long id, StudentRequest request) {
 		Student student = findById(id);
+		if (students.existsByEmailIgnoreCaseAndIdNot(request.email(), id)) {
+			throw new DuplicateEmailException(request.email());
+		}
 		student.setName(request.name());
 		student.setSurname(request.surname());
 		student.setEmail(request.email());
