@@ -2,7 +2,7 @@
 
 Student: Marua Makpyr, IT2-2306, ID 37578
 
-Status: project structure created
+Status: CRUD with duplicate email check merged into main
 
 ## About
 
